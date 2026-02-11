@@ -1,0 +1,73 @@
+version: 2
+
+models:
+  - name: marts_deals_stages
+    description: "Per-deal stage timeline with enriched analytic fields (next stage, time deltas, ordering)."
+    columns:
+      - name: deal_id
+        description: "Identifier of the deal."
+        tests: [not_null]
+      - name: stage_id
+        description: "Numeric stage identifier (derived from stage or activity)."
+        tests: [not_null]
+      - name: change_time
+        description: "Timestamp when this stage record occurred."
+        tests: [not_null]
+      - name: lost_reason
+        description: "Lost reason when the stage represents a lost state; otherwise null."
+      - name: next_stage_id
+        description: "Stage id of the following stage for the deal (if any)."
+      - name: next_change_time
+        description: "Timestamp of the next stage change (if any)."
+      - name: days_to_next_stage
+        description: "Number of days from this change to the next stage change."
+      - name: stage_order
+        description: "Sequential order of this stage for the deal (ascending by time)."
+      - name: stage_order_desc
+        description: "Reverse sequential order (1 = final stage)."
+      - name: initial_stage_time
+        description: "First recorded change_time for the deal."
+      - name: final_stage_time
+        description: "Last recorded change_time for the deal."
+      - name: final_stage_id
+        description: "Stage id at the final recorded state for the deal."
+      - name: min_stage_id
+        description: "Minimum stage id observed for the deal (used to infer if ever lost)."
+      - name: is_ever_lost
+        description: "Boolean flag indicating whether the deal was ever lost."
+
+  - name: marts_deals
+    description: "High-level deal mart combining add times, last user and aggregated stage metrics."
+    columns:
+      - name: deal_id
+        description: "Identifier of the deal."
+        tests: [not_null, unique]
+      - name: deal_add_time
+        description: "Earliest add_time for the deal."
+        tests: [not_null]
+      - name: last_user_id
+        description: "Most recent user id assigned to the deal (if any)."
+      - name: last_user_change_time
+        description: "Timestamp of the most recent user assignment change (if any)."
+      - name: initial_stage_time
+        description: "First recorded stage change time for the deal."
+      - name: pre_final_stage_id
+        description: "Stage id immediately before the final stage (if applicable)."
+      - name: pre_final_stage_time
+        description: "Timestamp of the pre-final stage change."
+      - name: final_stage_time
+        description: "Timestamp of the final stage change."
+      - name: final_stage_id
+        description: "Final stage id observed for the deal."
+      - name: is_lost
+        description: "Boolean flag whether the deal is lost in the final state."
+      - name: lost_reason
+        description: "Lost reason value when the final state is lost."
+      - name: is_ever_lost
+        description: "Boolean flag indicating the deal was ever lost during its lifecycle."
+      - name: stages_sequence
+        description: "Ordered array of stage ids experienced by the deal."
+      - name: days_to_final_stage
+        description: "Number of days between add_time and final_stage_time."
+      - name: days_since_final_stage
+        description: "Number of days from final_stage_time to today."

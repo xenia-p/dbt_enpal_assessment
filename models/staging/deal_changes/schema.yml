@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: stg_deal_changes
+    description: "Staging event-log model for `deal_changes` source. Each row represents a single field change on a deal."
+    columns:
+      - name: deal_id
+        description: "Identifier of the deal that the change belongs to."
+        tests: [not_null]
+      - name: change_time
+        description: "Timestamp when the change occurred."
+        tests: [not_null]
+      - name: changed_field_key
+        description: "Field key that was changed (e.g. 'add_time', 'user_id', 'stage_id', 'lost_reason')."
+        tests:
+          - not_null
+      - name: new_value
+        description: "The new value after the change. Type depends on `changed_field_key`."

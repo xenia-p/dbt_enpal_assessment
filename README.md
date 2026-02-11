@@ -1,8 +1,7 @@
 ## Setup
 
-1. Download Docker Desktop (if you don’t have installed) using the official website, install and launch.
-2. Fork this Github project to you Github account. Clone the forked repo to your device.
-3. Open your Command Prompt or Terminal, navigate to that folder, and run the command `docker compose up`.
+1. This project uses Postgres in Docker
+3. The local depencies and python version are manages with uv. Run `uv sync` if you have uv installed. Use requirements.txt otherwise.
 4. Now you have launched a local Postgres database with the following credentials:
  ```
     Host: localhost
@@ -14,8 +13,11 @@
 6. Install dbt-core and dbt-postgres using pip (if you don’t have) on your preferred environment.
 7. Now you can run `dbt run` with the test model and check public_pipedrive_analytics schema to see the dbt result (with one test model)
 
-## Project
-1. Remove the test model once you make sure it works
+## Assumptions and notes about the data
+1. For some reason activity_id in activity_table is not unique. I will just ingore it.
+2. All deals are lost, this is also weird.
+2. Almost no deals in activity_table are present in deal_changes. It's ok if these are just some data extracts but in general I assume it shouldn't be like this.
+3. I assume that there are no double entries in the table (e.g. one deal stage added twice) so I don't do any cleaning about that.
 2. Dive deep into the Pipedrive CRM source data to gain a thorough understanding of all its details. (You may also research the Pipedrive CRM tool terms).
 3. Define DBT sources and build the necessary layers organizing the data flow for optimal relevance and maintainability.
 4. Build a reporting model (rep_sales_funnel_monthly) with monthly intervals, incorporating the following funnel steps (KPIs):  

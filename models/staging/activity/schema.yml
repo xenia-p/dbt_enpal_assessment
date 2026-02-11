@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: stg_activity
+    description: |
+      Staging model for the `activity` source. Normalizes column names,
+      casts types, and keeps a small set of trusted columns for downstream
+      models. Keep raw/diagnostic fields for debugging.
+    meta:
+      owner: analytics
+      source: postgres_public.activity
+    columns:
+      - name: activity_id
+        description: Primary identifier for the activity record from the source.
+        tests:
+          - not_null
+
+      - name: deal_id
+        description: Identifier of the related deal, if present in source data.
+
+      - name: user_id
+        description: Identifier of the user who performed or recorded the activity.
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_dim_users')
+                field: id
+
+      - name: type
+        description: Reference to the activity type lookup.
+        tests:
+          - not_null
+
+      - name: due_to
+        description: due date for the activity, if applicable.
+        tests:
+          - not_null
+
+      - name: done
+        description: Flag indicating whether the activity is completed.
+        tests:
+          - not_null

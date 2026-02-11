@@ -1,0 +1,3 @@
+# Generated from pyproject.toml
+# Python requirement: >=3.11
+dbt-postgres>=1.10.0
