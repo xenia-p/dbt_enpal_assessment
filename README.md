@@ -1,17 +1,10 @@
 ## Setup
 
 1. This project uses Postgres in Docker
-3. The local depencies and python version are manages with uv. Run `uv sync` if you have uv installed. Use requirements.txt otherwise.
-4. Now you have launched a local Postgres database with the following credentials:
- ```
-    Host: localhost
-    User: admin
-    Password: admin
-    Port: 5432 
-```
-5. Connect to the db via a preferred tool (e.g. DataGrip, Dbeaver etc)
-6. Install dbt-core and dbt-postgres using pip (if you don’t have) on your preferred environment.
-7. Now you can run `dbt run` with the test model and check public_pipedrive_analytics schema to see the dbt result (with one test model)
+2. The local depencies and python version are manages with uv. Run `uv sync` if you have uv installed. Use requirements.txt otherwise.
+3. Sqlfluff is used for code beautifying. 
+
+
 
 ## Assumptions and notes about the data
 1. For some reason activity_id in activity_table is not unique. I will just ingore it.
