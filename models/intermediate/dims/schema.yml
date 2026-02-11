@@ -1,0 +1,12 @@
+version: 2
+
+models:
+  - name: interm_dim_stages
+    description: "Dimension of stage ids and their human-readable names, including inferred activity-based stages and a 'lost' stage."
+    columns:
+      - name: stage_id
+        description: "Numeric identifier for the stage (includes fractional values for activity-inferred stages)."
+        tests: [not_null, unique]
+      - name: stage_name
+        description: "Human-readable name for the stage (e.g., 'Sales Call 1', 'lost')."
+        tests: [not_null, unique]

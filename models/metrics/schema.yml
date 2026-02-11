@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: metrics_monthly_kpis
+    description: |
+      Monthly funnel KPIs per stage: counts of deals entering each stage per month.
+      The month is determined by the time of the first stage change for each deal.
+      So even later stage changes are attributed to the month of the initial stage change.
+      If the same deal enters the same stage multiple times, it is counted only once.
+    columns:
+      - name: month
+        description: "Month for the KPI (first day of the month)."
+        tests: [not_null]
+      - name: kpi_name
+        description: "Human readable name for the KPI (mapped from stage_name)."
+        tests: [not_null]
+      - name: funnel_step
+        description: "Numeric stage identifier representing the funnel step."
+        tests: [not_null]
+      - name: deals_count
+        description: "Count of distinct deals that reached the stage in the given month."
+        tests: [not_null]

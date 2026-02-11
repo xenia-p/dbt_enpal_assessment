@@ -1,0 +1,3 @@
+# Generated from pyproject.toml [dependency-group: dev]
+sqlfluff>=4.0.4
+sqlfluff-templater-dbt>=4.0.4
